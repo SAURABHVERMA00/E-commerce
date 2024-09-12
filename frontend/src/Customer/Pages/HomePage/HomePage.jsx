@@ -16,7 +16,7 @@ const HomePage = () => {
         <HomeSectionCarousel sectionName data={mens_kurta} />
       </div>
      
-        <Footer/>
+      
     
     </div>
   );

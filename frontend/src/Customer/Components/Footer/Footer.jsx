@@ -1,18 +1,18 @@
-import { Button, Grid2, Link, Typography } from "@mui/material";
+import { Button, Grid, Link, Typography } from "@mui/material";
 import React from "react";
 
 const Footer = () => {
   return (
     <div>
-      <Grid2
+      <Grid
         className="bg-black text-white text-center mt-10 "
         container
-  
-        sx={{ bgcolor: "black", color: "white", py: 3 ,display:"flex" , flexDirection:'column' }}
+        
+        sx={{ bgcolor: "black", color: "white", py: 3 }}
       >
       
           {/* 1 */}
-          <Grid2 item xs={12} sm={6} md={3}>
+          <Grid item xs={12} sm={6} md={3}>
             <Typography className="pb-5" variant="h6">
               Company
             </Typography>
@@ -41,10 +41,10 @@ const Footer = () => {
                 PARTNERS
               </Button>
             </div>
-          </Grid2>
+          </Grid>
 
           {/* 2 */}
-          <Grid2 item xs={12} sm={6} md={3}>
+          <Grid item xs={12} sm={6} md={3}>
             <Typography className="pb-5" variant="h6">
               Solutions
             </Typography>
@@ -73,10 +73,10 @@ const Footer = () => {
                 Support
               </Button>
             </div>
-          </Grid2>
+          </Grid>
 
           {/* 3 */}
-          <Grid2 item xs={12} sm={6} md={3}>
+          <Grid item xs={12} sm={6} md={3}>
             <Typography className="pb-5" variant="h6">
               Documentation
             </Typography>
@@ -90,10 +90,10 @@ const Footer = () => {
                 API Status
               </Button>
             </div>
-          </Grid2>
+          </Grid>
 
           {/* 4 */}
-          <Grid2 item xs={12} sm={6} md={3}>
+          <Grid item xs={12} sm={6} md={3}>
             <Typography className="pb-5" variant="h6">
               Legal
             </Typography>
@@ -112,10 +112,10 @@ const Footer = () => {
                 Terms
               </Button>
             </div>
-          </Grid2>
-    
+          </Grid>
+       
 
-        <Grid2 className="pt-20" item xs={12}>
+        <Grid item xs={12} >
           <Typography variant="body2" component="p" align="center">
             &copy; 2024 My Company. All rights reserved.
           </Typography>
@@ -128,8 +128,8 @@ const Footer = () => {
               Freepik
             </Link>
           </Typography>
-        </Grid2>
-      </Grid2>
+        </Grid>
+      </Grid>
     </div>
   );
 };
