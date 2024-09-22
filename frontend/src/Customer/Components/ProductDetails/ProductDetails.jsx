@@ -30,6 +30,7 @@ import { Grid } from '@mui/material'
 import ProductReviewCard from "./ProductReviewCard";
 import { mens_kurta } from "../../../Data/MensKurta";
 import HomeSectionCard from "../HomeSectionCard/HomeSectionCard";
+import { useNavigate } from "react-router-dom";
 const product = {
   name: "Basic Tee 6-Pack",
   price: "$192",
@@ -91,6 +92,10 @@ export default function ProductDetails() {
   const [selectedColor, setSelectedColor] = useState(product.colors[0]);
   const [selectedSize, setSelectedSize] = useState(product.sizes[2]);
 
+  const navigate=useNavigate();
+  const handleAddtoCart=()=>{
+    navigate("/cart")
+  }
   return (
     <div className="bg-white px-20">
       <div className="pt-6">
@@ -253,7 +258,7 @@ export default function ProductDetails() {
                   </fieldset>
                 </div>
 
-                <Button  variant="contained" sx={{px:"2rem" , py:"1rem" , bgcolor:"#9155fd" , mt:"1rem"}}>
+                <Button onClick={handleAddtoCart} variant="contained" sx={{px:"2rem" , py:"1rem" , bgcolor:"#9155fd" , mt:"1rem"}}>
                   Add to Cart
                 </Button>
               </form>

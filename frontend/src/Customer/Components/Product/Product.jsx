@@ -33,52 +33,43 @@ import {
 } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 
-
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Product() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
-  const location =useLocation();
-  const navigate=useNavigate();
-  
-  const handleFilter=(value,sectionId)=>{
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleFilter = (value, sectionId) => {
     const searchParams = new URLSearchParams(location.search);
-    let filterValue=searchParams.getAll(sectionId);
+    let filterValue = searchParams.getAll(sectionId);
 
-    if(filterValue.length>0 && filterValue[0].split(",").includes(value)){
-      filterValue=filterValue[0].split(",").filter((val)=>val!==value);
+    if (filterValue.length > 0 && filterValue[0].split(",").includes(value)) {
+      filterValue = filterValue[0].split(",").filter((val) => val !== value);
 
-
-      if(filterValue.length===0){
+      if (filterValue.length === 0) {
         searchParams.delete(sectionId);
       }
-    }else{
+    } else {
       filterValue.push(value);
     }
 
-
-    if(filterValue.length>0){
-      searchParams.set(sectionId,filterValue.join(","));
-      
+    if (filterValue.length > 0) {
+      searchParams.set(sectionId, filterValue.join(","));
     }
-    const query=searchParams.toString();
-  
-    navigate({search:`?${query}`}); 
+    const query = searchParams.toString();
 
-  }
+    navigate({ search: `?${query}` });
+  };
 
-  const handleRadioFilter=(e,sectionId)=>{
+  const handleRadioFilter = (e, sectionId) => {
     const searchParams = new URLSearchParams(location.search);
-    searchParams.set(sectionId,e.target.value);
-    const query=searchParams.toString();
-    navigate({search:`?${query}`});
-  }
-
-
-
+    searchParams.set(sectionId, e.target.value);
+    const query = searchParams.toString();
+    navigate({ search: `?${query}` });
+  };
 
   return (
     <div className="bg-white">
@@ -324,7 +315,9 @@ export default function Product() {
                               className="flex items-center"
                             >
                               <input
-                               onChange={() => handleFilter(option.value, section.id)}
+                                onChange={() =>
+                                  handleFilter(option.value, section.id)
+                                }
                                 defaultValue={option.value}
                                 defaultChecked={option.checked}
                                 id={`filter-${section.id}-${optionIdx}`}
@@ -383,7 +376,9 @@ export default function Product() {
                                 {section.options.map((option, optionIdx) => (
                                   <>
                                     <FormControlLabel
-                                      onChange={(e)=>handleRadioFilter(e,section.id)}
+                                      onChange={(e) =>
+                                        handleRadioFilter(e, section.id)
+                                      }
                                       value={option.value}
                                       control={<Radio />}
                                       label={option.label}

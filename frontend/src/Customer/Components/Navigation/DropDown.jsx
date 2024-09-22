@@ -1,7 +1,9 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
+import { useNavigate } from 'react-router-dom'
 
 export default function Example() {
+  const navigate=useNavigate()  
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
@@ -24,12 +26,12 @@ export default function Example() {
              Profile
             </a>
           </MenuItem>
-          <MenuItem>
+          <MenuItem onClick={()=>navigate("/account/order")} >
             <a
               href="#"
               className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900"
             >
-              Orders
+              My Orders
             </a>
           </MenuItem>
         
