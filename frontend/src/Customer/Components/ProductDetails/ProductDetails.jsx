@@ -41,19 +41,19 @@ const product = {
   ],
   images: [
     {
-      src: "https://tailwindui.com/img/ecommerce-images/product-page-02-secondary-product-shot.jpg",
+      src: "https://cdn.pixelspray.io/v2/black-bread-289bfa/woTKH5/wrkr/t.resize(h:543,w:445)/data/Superdry/25092023/410407891_40q_MODEL.jpg",
       alt: "Two each of gray, white, and black shirts laying flat.",
     },
     {
-      src: "https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-01.jpg",
+      src: "https://cdn.pixelspray.io/v2/black-bread-289bfa/woTKH5/wrkr/t.resize(h:543,w:445)/data/Superdry/25092023/410407891_40q_MODEL2.jpg ",
       alt: "Model wearing plain black basic tee.",
     },
     {
-      src: "https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-02.jpg",
+      src: "https://cdn.pixelspray.io/v2/black-bread-289bfa/woTKH5/wrkr/t.resize(h:543,w:445)/data/Superdry/25092023/410407891_40q_MODEL3.jpg",
       alt: "Model wearing plain gray basic tee.",
     },
     {
-      src: "https://tailwindui.com/img/ecommerce-images/product-page-02-featured-product-shot.jpg",
+      src: "https://cdn.pixelspray.io/v2/black-bread-289bfa/woTKH5/wrkr/t.resize(h:543,w:445)/data/Superdry/25092023/410407891_40q_MODEL4.jpg",
       alt: "Model wearing plain white basic tee.",
     },
   ],
