@@ -1,9 +1,9 @@
-const Cart = require('../models/cartModel');
+const Cart = require('../models/cartModel.model.js');
 
-async function createCart(user) {
+async function createCart(userId) {
     try{
         const cart=new Cart({
-            user
+            userId
         })
         const createdCart=await cart.save();
         return createdCart;

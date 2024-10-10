@@ -1,8 +1,9 @@
 const userService=require('../services/userService.js');
 
 const getUserProfile=async(req,res)=>{
+    const jwt=req.headers.authorization?.split(" ")[1];
+ 
     try{
-        const jwt=req.headers.authorization?.split(" ")[1];
 
         if(!jwt){
             return res.status(404).json({message:"token not found"});
