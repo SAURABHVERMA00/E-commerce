@@ -19,7 +19,7 @@ const productSchema=new mongoose.Schema({
         type:Number,
         // required:true
     },
-    discountPresnet:{
+    discountedPersent:{
         type:Number,
         // required:true
     },
