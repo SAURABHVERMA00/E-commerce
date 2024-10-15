@@ -4,7 +4,7 @@ const Product = require("../models/product.model");
 async function createProduct(reqData) {
   const topLevel = await Category.findOne({ name: reqData.topLevelCategory });
 
-  if (!toplevel) {
+  if (!topLevel) {
     topLevel = new Category({
       name: reqData.topLevelCategory,
       level: 1,
@@ -58,7 +58,7 @@ async function createProduct(reqData) {
     return await    product.save()
 }
 
-async function deleteProducts(productId) {
+async function deleteProduct(productId) {
     const product= await findProductById(productId)
 
     if(!product){
@@ -87,7 +87,7 @@ async function findProductById(productId) {
 
 async function getAllProducts(reqQuery) {
 
-    let {category,color ,sizes,minPrice,maxPrice,minDiscount,maxDiscount,sor,stock,pageNumber,pageSize}=reqQuery;
+    let {category,color ,sizes,minPrice,maxPrice,minDiscount,maxDiscount,sort,stock,pageNumber,pageSize}=reqQuery;
 
     pageSize= pageSize || 10;
 
@@ -112,5 +112,61 @@ async function getAllProducts(reqQuery) {
     if(sizes){
         const sizeSet=new Set(sizes)
         query=query.where('sizes.name').in([...sizeSet])
+
     }
+
+    if(minPrice && maxPrice){
+        query=query.where('discountedPrice').gte(minPrice).lte(maxPrice)
+    }
+
+    if(minDiscount){
+        query=  query.where('discountedPersent').gt(minDiscount)
+    }
+
+    if(stock){
+      if(stock=="in_stock"){
+          query=query.where('quantity').gt(0)
+      }else if(stock=="out_of_stock"){
+          query=query.where('quantity').lte(0)
+      }
+    }
+    
+    if(sort){
+
+      const sortDirection=sort==="price_hight"?-1:1;
+
+      query=query.sort({discountedPrice:sortDirection})
+
+    }
+
+    const totalProduct=await Product.countDocuments(query)
+
+    const skip=(pageNumber-1)*pageSize
+
+     query=  query.skip(skip).limit(pageSize)
+
+     const products=await query.exec()
+
+
+     const totalPages=Math.ceil(totalProduct/pageSize)  
+
+     return {content:products,currentPage:pageNumber,totalPages}
+}
+
+
+async function createMultipleProduct(products) {
+
+  for(let product of products){
+    await createProduct(product)
+  }
+
+}
+
+module.exports = {
+  createProduct,
+  deleteProduct ,
+  updateProduct,
+  findProductById,
+  getAllProducts,
+  createMultipleProduct
 }
