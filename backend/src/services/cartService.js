@@ -75,4 +75,4 @@ async function addCartItem(userId, req) {
     throw new Error(error.message);
   }
 }
-module.exports = { createCart, findUserCart };
+module.exports = { createCart, findUserCart,addCartItem };
