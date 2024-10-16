@@ -1,23 +1,53 @@
-const express=require('express');
+const express = require("express");
 
-const cors=require('cors');
-const app=express();
+const cors = require("cors");
+const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({ extended: true }));
 
+app.get("/", (req, res) => {
+  res.status(200).send({ message: "Welcome to the Ecommerce controller" });
+});
 
+const authRouter = require("./routes/auth.routes.js");
 
-app.get('/',(req,res)=>{
-    res.status(200).send({message:'Welcome to the Ecommerce controller'});
-})
+app.use("/auth", authRouter);
 
+const userRouter = require("./routes/user.routes.js");
 
-const authRouter=require('./routes/auth.routes.js');
+app.use("/api/users", userRouter);
 
-app.use('/auth',authRouter);
+const productRouter = require("./routes/product.routes.js");
 
-const userRouter=require('./routes/user.routes.js');
+app.use("/api/products", productRouter);
 
-app.use('/api/users',userRouter);
-module.exports=app;
+const adminOrderRouter = require("./routes/admin.routes.js");
+
+app.use("/api/admin/orders", adminOrderRouter);
+
+const adminProductRouter = require("./routes/adminProduct.routes.js");
+
+app.use("/api/admin/products", adminProductRouter);
+
+const cartRouter = require("./routes/cart.routes.js");
+
+app.use("/api/cart", cartRouter);
+
+const orderRouter = require("./routes/order.routes.js");
+
+app.use("/api/orders", orderRouter);
+
+const cartItemRouter = require("./routes/carItem.routes.js");
+
+app.use("/api/cart_items", cartItemRouter);
+
+const ratingRouter = require("./routes/rating.routes.js");
+
+app.use("/api/ratings", ratingRouter);
+
+const reviewRouter = require("./routes/review.routes.js");
+
+app.use("/api/reviews", reviewRouter);
+
+module.exports = app;

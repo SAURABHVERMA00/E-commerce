@@ -22,3 +22,8 @@ async function getAllRating(productId) {
 
     return await Rating.find({product:productId}).populate('user')
 }
+
+module.exports = {
+    createRating,
+    getAllRating
+}
