@@ -2,7 +2,7 @@ const userService=require('../services/userService.js');
 
 const getUserProfile=async(req,res)=>{
     const jwt=req.headers.authorization?.split(" ")[1];
- 
+    
     try{
 
         if(!jwt){

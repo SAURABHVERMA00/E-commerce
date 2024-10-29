@@ -1,7 +1,7 @@
 const orderService=require('../services/orderService');
 
 const createOrder=async(req,res)=>{
-    const user=req.user;
+    const user=await req.user;
 
     try{
         const createOrder=await orderService.createOrder(user,req.body);
@@ -14,7 +14,7 @@ const createOrder=async(req,res)=>{
 }
 
 const findOrderById=async(req,res)=>{
-    const user=req.user;
+    const user=await req.user;
 
     try{
         const createOrder=await orderService.findOrderById(req.params.id);
@@ -24,7 +24,7 @@ const findOrderById=async(req,res)=>{
     }
 }
 const orderHistory=async(req,res)=>{
-    const user=req.user;
+    const user=await req.user;
 
     try{
         const orderhis=await orderService.userOrderHistory(user._id);    

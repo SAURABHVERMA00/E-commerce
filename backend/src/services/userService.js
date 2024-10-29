@@ -20,14 +20,7 @@ const createUser = async (userData) => {
     }
     password = await bcrypt.hash(password, 8);
 
-    // const user=new User({
-    //     firstName,
-    //     lastName,
-    //     email,
-    //     password
-    // });
-
-    // await user.save();
+  
 
     const user = await User.create({
       firstName,
@@ -50,11 +43,7 @@ const findUserById = async (userId) => {
     if (!user) {
       throw new Error("User not found", userId);
     }
-    return {
-      success: true,
-      message: "User found",
-      data: user,
-    };
+    return user;
   } catch (error) {
     throw new Error(error.message);
   }
@@ -66,11 +55,7 @@ const getUserByemail = async (email) => {
     if (!user) {
       throw new Error("User not found", email);
     }
-    return {
-      success: true,
-      message: "User found",
-      data: user,
-    };
+    return user
   } catch (error) {
     throw new Error(error.message);
   }
@@ -78,18 +63,15 @@ const getUserByemail = async (email) => {
 
 const getUserProfileByToken = async (token) => {
   try {
+    
     const userId = await jwtProvider.getUserIdFromToken(token);
-
+    
     const user = await User.findById(userId);
    
     if (!user) {
       throw new Error("User not found", userId);
     }
-    return {
-      success: true,
-      message: "User found",
-      data: user,
-    };
+    return user
   } catch (error) {
     throw new Error(error.message);
   }
@@ -98,11 +80,7 @@ const getUserProfileByToken = async (token) => {
 const getAllUsers = async () => {
   try {
     const users = await User.find();
-    return {
-      success: true,
-      message: "Users found",
-      data: users,
-    };
+    return users
   } catch (error) {
     throw new Error(error.message);
   }

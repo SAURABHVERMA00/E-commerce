@@ -1,21 +1,20 @@
 const jwt=require('jsonwebtoken');
-const SECRET_KEY='dfkjneknrfdnkwjebfiuwbejkjcfiwe0u3o'
+const SECRET_KEY=''
 
 const generateToken= (userId) => {
-    // console.log(userId);
- 
-    const token=jwt.sign({userId},SECRET_KEY,{expiresIn:'48h'});
+    
+    
+  
+    const token= jwt.sign({userId:userId},SECRET_KEY,{expiresIn:'48h'});
 
     return token;
 }
 
-const getUserIdFromToken=async(token)=>{
+const getUserIdFromToken=(token)=>{
     try {
-        console.log(token);
-        const decodedToken = jwt.verify(token, SECRET_KEY);
-        console.log(decodedToken);
-        
-    
+       
+        const decodedToken =  jwt.verify(token,SECRET_KEY);
+       
         return decodedToken.userId;
       } catch (error) {
         console.error('Error verifying token:', error);

@@ -5,11 +5,15 @@ const createProduct=async(req,res)=>{
     try{
 
         const product=await productService.createProduct(req.body);
-
         return res.status(201).json(product);
+       
 
     }catch(error){
-        res.status(500).send(error.message);
+        if (!res.headersSent) {
+            res.status(500).send(error.message);
+          } else {
+            console.error('Headers already sent:', error.message);
+          }
     }
 }
 const deleteProduct=async(req,res)=>{
@@ -38,7 +42,9 @@ const updateProduct=async(req,res)=>{
 }
 
 const findProductById=async(req,res)=>{
+   
     const productId=req.params.id;
+  
     try{
 
         const product=await productService.findProductById(productId);
@@ -52,7 +58,7 @@ const findProductById=async(req,res)=>{
 const getAllProducts=async(req,res)=>{
   
     try{
-
+        console.log("req.query",req.params);
         const products=await productService.getAllProducts(req.query);
 
         return res.status(201).json(products);

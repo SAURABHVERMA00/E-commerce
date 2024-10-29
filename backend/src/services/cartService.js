@@ -4,9 +4,11 @@ const Product = require("../models/product.model.js");
 
 async function createCart(userId) {
   try {
+    
     const cart = new Cart({
-      userId,
-    });
+      user:userId,
+    }); 
+    console.log("Cart show ",cart);
     const createdCart = await cart.save();
     return createdCart;
   } catch (error) {
@@ -16,9 +18,11 @@ async function createCart(userId) {
 
 async function findUserCart(userId) {
   try {
-    const cart = await Cart.findOne({ userId });
+  
 
-    const cartItems = await CartItems.find({ cart: cart._id }).populate(
+    let cart = await Cart.findOne({ user: userId });
+   
+    let cartItems = await CartItems.find({ cart: cart._id }).populate(
       "product"
     );
     cart.cartItems = cartItems;
@@ -45,7 +49,8 @@ async function findUserCart(userId) {
 
 async function addCartItem(userId, req) {
   try {
-    const cart = await Cart.findOne({ user: userId });
+ 
+    const cart = await Cart.findOne({ user:userId });
     const product = await Product.findById(req.productId);
 
     const isPresent = await CartItems.findOne({
@@ -53,7 +58,7 @@ async function addCartItem(userId, req) {
       product: product._id,
       userId,
     });
-    
+
     if (!isPresent) {
       const cartItem = new CartItems({
         cart: cart._id,
@@ -75,4 +80,4 @@ async function addCartItem(userId, req) {
     throw new Error(error.message);
   }
 }
-module.exports = { createCart, findUserCart,addCartItem };
+module.exports = { createCart, findUserCart, addCartItem };
