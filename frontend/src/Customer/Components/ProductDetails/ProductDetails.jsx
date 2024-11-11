@@ -21,7 +21,7 @@
 */
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { Radio, RadioGroup } from "@headlessui/react";
 import Rating from '@mui/material/Rating';
@@ -30,7 +30,10 @@ import { Grid } from '@mui/material'
 import ProductReviewCard from "./ProductReviewCard";
 import { mens_kurta } from "../../../Data/MensKurta";
 import HomeSectionCard from "../HomeSectionCard/HomeSectionCard";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { findProductById } from "../../../StateManage/Product/action";
+import { addItemToCart } from "../../../StateManage/Cart/action";
 const product = {
   name: "Basic Tee 6-Pack",
   price: "$192",
@@ -89,13 +92,31 @@ function classNames(...classes) {
 }
 
 export default function ProductDetails() {
-  const [selectedColor, setSelectedColor] = useState(product.colors[0]);
-  const [selectedSize, setSelectedSize] = useState(product.sizes[2]);
 
+  const [selectedSize, setSelectedSize] = useState("");
+  const params=useParams();
   const navigate=useNavigate();
+  const dispatch=useDispatch();
+
+  const {products}=useSelector(state=>state);
+  // console.log("Product ",products.product)
   const handleAddtoCart=()=>{
+      
+      const data={productId:params.productId,size:selectedSize.name}
+      // console.log("Item Data",data);/
+      dispatch(addItemToCart(data))
+
+
+  
     navigate("/cart")
   }
+
+  useEffect(()=>{
+    const data={productId:params.productId}
+    dispatch(findProductById(data));
+  },[params.productId]);
+
+
   return (
     <div className="bg-white px-20">
       <div className="pt-6">
@@ -139,11 +160,11 @@ export default function ProductDetails() {
         </nav>
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-10 pt-10 px-4">
           {/* Image gallery */}
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center gap-y-1.5">
             <div className="overflow-hidden rounded-lg max-w-[30rem]  max-h-[35rem]">
               <img
-                alt={product.images[0].alt}
-                src={product.images[0].src}
+                src={products.product?.imageURL}
+                alt={product.images[0].src}
                 className="h-full w-full object-cover object-center"
               />
             </div>
@@ -165,11 +186,11 @@ export default function ProductDetails() {
             <div className="lg:col-span-2 ">
 
               <h1 className="text-lg lg:text-xl font-semibold text-gray-900">
-                  UniversalOutfit
+                 {products.product?.brand}
               </h1>
 
               <h1 className="text-lg lg:text-xl text-gray-900 opacity-60 pt-1">
-                Casual Puff Seleeves Solid WHite man
+              {products.product?.title} 
               </h1>
             </div>
 
@@ -177,9 +198,9 @@ export default function ProductDetails() {
             <div className="mt-4 lg:row-span-3 lg:mt-0">
               <h2 className="sr-only">Product information</h2>
              <div className="flex space-x-5 items-center text-lg lg:text-xl text-gray-900 mt-6">
-              <p className="font-semibold ">₹199</p>
-              <p className="opacity-50 line-through">₹211</p>
-              <p className="font-semibold text-green-600">5% Off</p>
+              <p className="font-semibold ">{products.product?.discountedPrice}</p>
+              <p className="opacity-50 line-through">{products.product?.price}</p>
+              <p className="font-semibold text-green-600">{products.product?.discountedPersent}% Off</p>
 
              </div>
 

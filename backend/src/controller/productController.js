@@ -5,6 +5,7 @@ const createProduct=async(req,res)=>{
     try{
 
         const product=await productService.createProduct(req.body);
+       
         return res.status(201).json(product);
        
 
@@ -58,8 +59,9 @@ const findProductById=async(req,res)=>{
 const getAllProducts=async(req,res)=>{
   
     try{
-        console.log("req.query",req.params);
+        // console.log("Query ",req.query);
         const products=await productService.getAllProducts(req.query);
+        // console.log("Products ",products);
 
         return res.status(201).json(products);
 

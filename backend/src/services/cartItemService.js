@@ -2,9 +2,10 @@ const CartItems = require("../models/cartItems.model");
 const userService = require("../services/userService");
 
 async function updateCartItem(userId, cartItemId, cartItemData) {
+  // console.log("updateCartItem", userId, cartItemId, cartItemData);
   try {
     const item = await findCartItemById(cartItemId);
-
+    
     if (item.userId.toString() !== userId.toString()) {
       throw new Error("You are not authorized to update this item", cartItemId);
     }

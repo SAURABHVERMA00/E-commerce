@@ -2,13 +2,13 @@ import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { useNavigate } from 'react-router-dom'
 
-export default function Example() {
+export default function Example({fullName,handleLogout}) {
   const navigate=useNavigate()  
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
         <MenuButton className="inline-flex w-10 h-10  justify-center gap-x-1.5 rounded-full items-center  bg-blue-600 px-3 py-2 text-lg font-semibold text-white shadow-sm ring-1 ring-inset ring-gray-300 ">
-          R
+          {fullName}
           
         </MenuButton>
       </div>
@@ -38,6 +38,7 @@ export default function Example() {
           <form action="#" method="POST">
             <MenuItem>
               <button
+                onClick={handleLogout}
                 type="submit"
                 className="block w-full px-4 py-2 text-left text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900"
               >

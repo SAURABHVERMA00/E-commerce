@@ -17,10 +17,14 @@ const findUserCart=async(req,res)=>{
 
 const addItemToCart=async(req,res)=>{
     const user=req.user;
+    // console.log("user",user);
+    // console.log("req.body",req.body);
+
+    
     try{
 
         const cartItem=await cartService.addCartItem(user._id,req.body);
-
+        
         return res.status(200).send(cartItem);
 
 

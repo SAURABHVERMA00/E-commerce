@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import {
   Dialog,
   DialogBackdrop,
@@ -22,25 +22,66 @@ import {
 
 import { navigation } from "../Navigation/navigationData";
 import DropDown from "../Navigation/DropDown";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import AuthenticationModel from "../../Auth/AuthenticationModel";
+import { useDispatch, useSelector } from "react-redux";
+import { getUser, logoutUser } from "../../../StateManage/Authentication/action";
+
+
 
 export default function Navigation() {
   const [open, setOpen] = useState(false);
-  const [anchorE1, setAnchorE1] = useState(null);
-  const openUserMenu=Boolean(anchorE1);
   const navigate = useNavigate();
+  const jwt=localStorage.getItem("jwt");
+  const {auth} = useSelector(store=>store);
+  const dispatch=useDispatch();
+  const location=useLocation();
 
-  const handleUserClick=(event)=>{
+  const [openAuthModal, setOpenAuthModal] = useState(false);
+  const [anchorE1, setAnchorE1] = useState(null);
+  const openUserMenu = Boolean(anchorE1);
+
+  const handleUserClick = (event) => {
     setAnchorE1(event.currentTarget);
-  }
-  const handleCloseUserMenu=(event)=>{
+  };
+  const handleCloseUserMenu = (event) => {
     setAnchorE1(null);
-  }
+  };
+  const handleClose = () => {
+    setOpenAuthModal(false);
+
+  };
+  const handleOpen = () => {
+    setOpenAuthModal(true);
+  };
 
   const handleCategoryClick = (category, section, item) => {
     navigate(`/${category.id}/${section.id}/${item.id}`);
     setOpen(false);
   };
+
+  useEffect(()=>{
+     
+    if(jwt){
+      dispatch(getUser(jwt));
+    }
+
+  },[jwt,auth.jwt]);
+
+  useEffect(()=>{
+      if(auth.user){
+        handleClose();
+      }
+      if(location.pathname==="/login" || location.pathname==="/register"){
+          navigate(-1);
+      }
+  },[auth.user])
+
+
+  const handleLogout = () => {
+    dispatch(logoutUser());
+    handleCloseUserMenu();
+  }
 
   return (
     <div className="bg-white ">
@@ -202,15 +243,13 @@ export default function Navigation() {
               <PopoverGroup className="hidden lg:ml-8 lg:block lg:self-stretch">
                 <div className="flex h-full space-x-8">
                   {navigation.categories.map((category) => (
-                    <Popover key={category.name} className="flex"   >
-
-
+                    <Popover key={category.name} className="flex">
                       <div className="relative flex">
                         <PopoverButton className="relative z-10 -mb-px flex items-center border-b-2 border-transparent pt-px text-sm font-medium text-gray-700 transition-colors duration-200 ease-out hover:text-gray-800 data-[open]:border-indigo-600 data-[open]:text-indigo-600">
                           {category.name}
                         </PopoverButton>
                       </div>
-                    
+
                       <PopoverPanel
                         transition
                         className="absolute inset-x-0 top-full text-sm text-gray-500 transition data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in"
@@ -275,7 +314,6 @@ export default function Navigation() {
                                                 category,
                                                 section,
                                                 item
-                                               
                                               )
                                             }
                                             className="cursor-pointer hover:text-gray-800"
@@ -309,7 +347,18 @@ export default function Navigation() {
 
               <div className="ml-auto flex items-center">
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  <DropDown />
+                  {auth.user?.firstName ? (
+                    
+                    
+                    <DropDown fullName={auth.user.firstName[0].toUpperCase()} handleLogout={handleLogout} />
+                  ) : (
+                    <button
+                      className="text-sm font-medium text-gray-700 font-semibold hover:text-gray-800"
+                      onClick={handleOpen}
+                    >
+                      SIGNIN
+                    </button>
+                  )}
                 </div>
 
                 {/* Search */}
@@ -341,6 +390,8 @@ export default function Navigation() {
           </div>
         </nav>
       </header>
+
+      <AuthenticationModel handleClose={handleClose} open={openAuthModal} />
     </div>
   );
 }

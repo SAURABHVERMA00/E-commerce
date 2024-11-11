@@ -1,10 +1,12 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const mongoDbURL="";
+const mongoDbURI="";
+const connectDB = () => {
+  
+  if (!mongoDbURI) {
+    throw new Error("mongoDbURI environment variable is not set");
+  }
+  return mongoose.connect(mongoDbURI);
+};
 
-const connectDB=()=>{
-    return mongoose.connect(mongoDbURL );
-}
-
-
-module.exports={connectDB};
+module.exports = { connectDB };
