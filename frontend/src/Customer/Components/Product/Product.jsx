@@ -118,7 +118,7 @@ export default function Product() {
    
     dispatch(findProducts(data));
 
-
+    
     
   },[params.levelThree,colorValue,sizeValue,priceValue,discount,sortValue,pageNumber,stock])
 

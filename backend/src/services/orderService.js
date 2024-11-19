@@ -1,10 +1,11 @@
 const cartService = require("../services/cartService");
 const Address = require("../models/address.model");
 const Order = require("../models/order.model");
-const OrderItems=require('../models/OrderItems.model');
+const OrderItems = require("../models/OrderItems.model");
 
 async function createOrder(user, shippingAddress) {
   let address;
+
   if (shippingAddress._id) {
     const existAdd = await Address.findById(shippingAddress._id);
 
@@ -13,22 +14,17 @@ async function createOrder(user, shippingAddress) {
     address = new Address(shippingAddress);
     address.user = user;
     await address.save();
-   
 
-    user.address.push(address);
+    user.address.push(address._id);
     await user.save();
   }
 
-
-
   const cart = await cartService.findUserCart(user._id);
- 
-  
+
   let orderItems = [];
 
   for (let item of cart.cartItems) {
     let orderItem = new OrderItems({
-    
       price: item.price,
       product: item.product,
       quantity: item.quantity,
@@ -38,13 +34,14 @@ async function createOrder(user, shippingAddress) {
     });
 
     const createdOrderItem = await orderItem.save();
-    orderItems.push(createdOrderItem);
+
+    orderItems.push(createdOrderItem._id);
   }
 
   const createdOrder = new Order({
-    user: user,
+    user: user._id,
     orderItems: orderItems,
-    shippingAddress: address,
+    shippingAddress: address._id,
     totalPrice: cart.totalPrices,
     totalDiscountedPrice: cart.totalDiscountedPrice,
     discount: cart.discount,
@@ -53,7 +50,15 @@ async function createOrder(user, shippingAddress) {
 
   const savedOrder = await createdOrder.save();
 
-  return savedOrder;
+  // return savedOrder.populate("orderItems").populate("shippingAddress").execPopulate();
+
+    // Populate references for the response
+    const populatedOrder = await Order.findById(savedOrder._id)
+    .populate('orderItems')
+    .populate('shippingAddress')
+    .populate('user');
+
+  return populatedOrder;
 }
 
 async function placedOrder(orderId) {

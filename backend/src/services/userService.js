@@ -29,7 +29,7 @@ const createUser = async (userData) => {
       password,
     });
 
-    // console.log("User created successfully", user);  
+  
     return user;
   } catch (error) {
     throw new Error(error.message);
@@ -39,7 +39,8 @@ const createUser = async (userData) => {
 const findUserById = async (userId) => {
   try {
     const user = await User.findById(userId)
-    // .populate("address");
+    .populate("address");
+   
     if (!user) {
       throw new Error("User not found", userId);
     }
@@ -66,7 +67,7 @@ const getUserProfileByToken = async (token) => {
     
     const userId = await jwtProvider.getUserIdFromToken(token);
     
-    const user = await User.findById(userId);
+    const user = await User.findById(userId).populate("address");
    
     if (!user) {
       throw new Error("User not found", userId);

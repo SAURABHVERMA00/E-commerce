@@ -2,7 +2,7 @@ const orderService=require('../services/orderService');
 
 const createOrder=async(req,res)=>{
     const user=await req.user;
-
+  
     try{
         const createOrder=await orderService.createOrder(user,req.body);
         return res.status(201).json(createOrder);

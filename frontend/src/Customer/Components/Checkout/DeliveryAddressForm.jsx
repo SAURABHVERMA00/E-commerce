@@ -7,6 +7,10 @@ import { useNavigate } from "react-router-dom";
 const DeliveryAddressForm = () => {
     const dispatch=useDispatch();
     const navigate=useNavigate();   
+    const {auth}=useSelector(store=>store)  
+
+    // console.log('auth',auth.user);
+
 
     const handleSubmit=(e)=>{
         e.preventDefault();
@@ -35,11 +39,8 @@ const DeliveryAddressForm = () => {
             <Grid xs={12}  lg={5} className='border rounded-e-md shadow-md h-[30.5rem] overflow-scroll'>
 
                 <div className='p-5 py-7 border-b cursor-pointer'>
-                    <AddressCard/>
-                    <Button sx={{mt:2 ,bgcolor:"RGB(145 85 253)"}} size='large' variant='contained'>
-                        Deliver Here
-
-                    </Button>
+                    {auth.user?.address.map((item)=><AddressCard address={item} check={true}/>)}
+                   
 
                 </div>
 

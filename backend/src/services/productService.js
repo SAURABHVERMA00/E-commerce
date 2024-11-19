@@ -119,18 +119,18 @@ async function getAllProducts(reqQuery) {
 
 
   if(color==="red" || color==="green" || color==="blue" || color==="yellow" || color==="black" || color==="white" || color==="pink" || color==="purple" || color==="orange" || color==="brown" || color==="grey" || color==="gold" || color==="silver" || color==="multi" || color==="beige" || color==="navy" || color==="khaki" || color==="maroon" || color==="olive" || color==="turquoise" || color==="coral" || color==="teal" || color==="mint" || color==="mustard" || color==="peach" || color==="lavender" || color==="rust" || color==="cream" || color==="charcoal" || color==="taupe" || color==="indigo" || color==="bronze" || color==="copper" || color==="rose" || color==="ivory" || color==="tan" || color==="salmon" || color==="plum" || color==="burgundy" || color==="mauve" || color==="khaki" || color==="lime" || color==="aqua" || color==="fuchsia" || color==="violet" || color==="magenta" || color==="olive" || color==="peach" || color==="coral" || color==="teal" || color==="turquoise" || color==="lavender" || color==="mustard" || color==="mint" || color==="taupe" || color==="salmon" || color==="ivory" || color==="rose" || color==="indigo" || color==="bronze" || color==="copper" || color==="burgundy" || color==="mauve" || color==="khaki" || color==="lime" || color==="aqua" || color==="fuchsia" || color==="violet" || color==="magenta" || color==="olive" || color==="peach" || color==="coral" || color==="teal" || color==="turquoise" || color==="lavender" || color==="mustard" || color==="mint" || color==="taupe" || color==="salmon" || color==="ivory" || color==="rose" || color==="indigo" || color==="bronze" || color==="copper" || color==="burgundy" || color==="mauve" || color==="khaki" || color==="lime" ){  
-    // console.log("Color is Valid Saurabh",color);
+    
   
     const colorSet = new Set(
       color.split(",").map((color) => color.trim().toLowerCase())
     );
-    // console.log("Color Set ", colorSet);
+    
     const colorRegex =
       colorSet.size > 0 ? new RegExp([...colorSet].join("|"), "i") : null;
 
-      // console.log("Color Regex ", colorRegex);
+     
     query = query.where("color").regex(colorRegex);
-    // console.log("Color Query ", (await query).toString());
+   
   }
   
   if (sizes) {
@@ -163,15 +163,15 @@ async function getAllProducts(reqQuery) {
     const sortDirection = sort === "price_high" ? -1 : 1;
     query = query.sort({ discountedPrice: sortDirection });
   }
-  // console.log("Query ", query.getFilter());
+  
   const totalProduct = await Product.countDocuments(query.getFilter());
-  // console.log("Total Product ", totalProduct);
+  
   const skip = (pageNumber - 1) * pageSize;
 
   query = query.skip(skip).limit(pageSize);
   
   const products = await query.exec();
-  // console.log("Products ", products);
+ 
 
   const totalPages = Math.ceil(totalProduct / pageSize);
 

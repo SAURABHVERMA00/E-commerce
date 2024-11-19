@@ -59,9 +59,9 @@ const findProductById=async(req,res)=>{
 const getAllProducts=async(req,res)=>{
   
     try{
-        // console.log("Query ",req.query);
+        
         const products=await productService.getAllProducts(req.query);
-        // console.log("Products ",products);
+        
 
         return res.status(201).json(products);
 

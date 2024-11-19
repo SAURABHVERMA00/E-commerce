@@ -12,7 +12,7 @@ export const MainCarouselData = [
         path: "/women/c lothing/women_sari"
     },
     {
-        image: "https://d6kigqwjl9u8w.cloudfront.net/mageplaza/bannerslider/banner/image/7/_/7_1_-17-08.jpg" ,
+        image: "https://www.ethnicplus.in/media/mageplaza/bannerslider/banner/image/1/1/11_14.jpg" ,
         path: "/women/clothing/lengha_choli"
     }
 ]

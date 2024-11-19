@@ -10,14 +10,11 @@ const Cart = () => {
 
   const dispatch=useDispatch()
   const {cart}= useSelector(state=>state);
-
+  
   const handleCheckout=()=>{
     navigate('/checkout?step=2')
   }
-  // const handlegetcart=()=>{
-   
-  // }
-  
+ 
   useEffect(()=>{
     // handlegetcart();
     dispatch(getCart());
@@ -43,7 +40,7 @@ const Cart = () => {
               </div>
               <div className="flex justify-between pt-3 text-black">
                 <span>Discount</span>
-                <span className="text-green-600">-₹{cart.cart?.discount}</span>
+                <span className="text-green-600">-₹{cart.cart?.totalDiscountedPrice}</span>
               </div>
               <div className="flex justify-between pt-3  ">
                 <span>Delivery Charge </span>
@@ -51,7 +48,7 @@ const Cart = () => {
               </div>
               <div className="flex justify-between pt-3 text-black font-bold">
                 <span>Total Amount</span>
-                <span className="text-green-600 ">₹{cart.cart?.totalDiscountedPrice }</span>
+                <span className="text-green-600 ">₹{cart.cart?.discount }</span>
               </div>
             </div>
             <Button

@@ -1,24 +1,4 @@
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    theme: {
-      extend: {
-        gridTemplateRows: {
-          '[auto,auto,1fr]': 'auto auto 1fr',
-        },
-      },
-    },
-    plugins: [
-      // ...
-      require('@tailwindcss/aspect-ratio'),
-    ],
-  }
-  ```
-*/
+
 "use client";
 
 import { useEffect, useState } from "react";
@@ -99,11 +79,11 @@ export default function ProductDetails() {
   const dispatch=useDispatch();
 
   const {products}=useSelector(state=>state);
-  // console.log("Product ",products.product)
+ 
   const handleAddtoCart=()=>{
-      
+      console.log(params.productId)
       const data={productId:params.productId,size:selectedSize.name}
-      // console.log("Item Data",data);/
+    
       dispatch(addItemToCart(data))
 
 

@@ -50,4 +50,10 @@ const reviewRouter = require("./routes/review.routes.js");
 
 app.use("/api/reviews", reviewRouter);
 
+
+const paymentRouter = require("./routes/payment.routes.js");
+
+app.use("/api/payments", paymentRouter);
+
+
 module.exports = app;

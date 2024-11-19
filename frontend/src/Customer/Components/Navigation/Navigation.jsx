@@ -26,6 +26,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import AuthenticationModel from "../../Auth/AuthenticationModel";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser, logoutUser } from "../../../StateManage/Authentication/action";
+import { Button } from "@mui/material";
 
 
 
@@ -81,6 +82,20 @@ export default function Navigation() {
   const handleLogout = () => {
     dispatch(logoutUser());
     handleCloseUserMenu();
+  }
+
+  useEffect(()=>{
+    
+  },[auth.user])
+
+
+
+  const handleCart=()=>{
+    navigate("/cart");
+  }
+
+  const handleHomePage=()=>{
+    navigate("/");  
   }
 
   return (
@@ -229,14 +244,14 @@ export default function Navigation() {
 
               {/* Logo */}
               <div className="ml-4 flex lg:ml-0">
-                <a href="#">
+              <Button  onClick={handleHomePage}>  <a href="#">
                   <span className="sr-only">Your Company</span>
                   <img
                     alt=""
                     src="https://marketplace.canva.com/EAF6ICBwJ7U/1/0/1600w/canva-blue-and-white-circle-retail-logo-jWnP4G7rjfI.jpg"
                     className="h-14 w-auto"
                   />
-                </a>
+                </a></Button>
               </div>
 
               {/* Flyout menus */}
@@ -374,7 +389,7 @@ export default function Navigation() {
 
                 {/* Cart */}
                 <div className="ml-4 flow-root lg:ml-6">
-                  <a href="#" className="group -m-2 flex items-center p-2">
+                  <Button onClick={handleCart}>   <a href="#" className="group -m-2 flex items-center p-2" >
                     <ShoppingBagIcon
                       aria-hidden="true"
                       className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
@@ -383,7 +398,7 @@ export default function Navigation() {
                       0
                     </span>
                     <span className="sr-only">items in cart, view bag</span>
-                  </a>
+                  </a></Button>
                 </div>
               </div>
             </div>

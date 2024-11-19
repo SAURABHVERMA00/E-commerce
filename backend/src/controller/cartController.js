@@ -17,8 +17,7 @@ const findUserCart=async(req,res)=>{
 
 const addItemToCart=async(req,res)=>{
     const user=req.user;
-    // console.log("user",user);
-    // console.log("req.body",req.body);
+   
 
     
     try{
